@@ -18,17 +18,17 @@
     
     
     //DRAW VIEW TILES
-    CGRect frame00 = CGRectMake(20, 100, 80, 80);
-    CGRect frame01 = CGRectMake(120, 100, 80, 80);
-    CGRect frame02 = CGRectMake(220, 100, 80, 80);
+    CGRect frame00 = CGRectMake(20, 50, 80, 80);
+    CGRect frame01 = CGRectMake(120, 50, 80, 80);
+    CGRect frame02 = CGRectMake(220, 50, 80, 80);
     
-    CGRect frame03 = CGRectMake(20, 200, 80, 80);
-    CGRect frame04 = CGRectMake(120, 200, 80, 80);
-    CGRect frame05 = CGRectMake(220, 200, 80, 80);
+    CGRect frame03 = CGRectMake(20, 150, 80, 80);
+    CGRect frame04 = CGRectMake(120, 150, 80, 80);
+    CGRect frame05 = CGRectMake(220, 150, 80, 80);
     
-    CGRect frame06 = CGRectMake(20, 300, 80, 80);
-    CGRect frame07 = CGRectMake(120, 300, 80, 80);
-    CGRect frame08 = CGRectMake(220, 300, 80, 80);
+    CGRect frame06 = CGRectMake(20, 250, 80, 80);
+    CGRect frame07 = CGRectMake(120, 250, 80, 80);
+    CGRect frame08 = CGRectMake(220, 250, 80, 80);
     
     v0 = [[MyView alloc] initWithFrame:frame00];
     v1 = [[MyView alloc] initWithFrame:frame01];
@@ -94,7 +94,7 @@
     tileArray = [[NSArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
     previousTile = -1;
     
-    CGRect confirmFrame = CGRectMake(60.0f, 430.0f, 200.0f, 50.0f);
+    CGRect confirmFrame = CGRectMake(60.0f, 350.0f, 200.0f, 50.0f);
     UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmFrame];
     [confirmButton setBackgroundColor:[UIColor redColor]];
     [confirmButton setTitle:@"Confirm Choice" forState:UIControlStateNormal];
@@ -105,7 +105,7 @@
     
     
     
-    CGRect resetFrame = CGRectMake(60.0f, 500.0f, 200.0f, 50.0f);
+    CGRect resetFrame = CGRectMake(60.0f, 420.0f, 200.0f, 50.0f);
     UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
     [resetButton setBackgroundColor:[UIColor redColor]];
     [resetButton setTitle:@"Reset Game!" forState:UIControlStateNormal];
