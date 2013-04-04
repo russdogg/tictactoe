@@ -18,12 +18,13 @@
 {
     int tag;
     int id;
-    BOOL clicked;
+    BOOL picked;
 }
 @property (nonatomic, weak) id <MyViewDelegate> delegate;
 
 @property (nonatomic, assign) int tag;
 @property (nonatomic, assign) int id;
-@property (nonatomic, assign) BOOL clicked;
+@property (nonatomic, assign) BOOL picked;
+
 -(void)resetView;
 @end

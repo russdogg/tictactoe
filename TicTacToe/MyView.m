@@ -13,12 +13,13 @@
 
 @synthesize tag;
 @synthesize id;
-@synthesize clicked;
+@synthesize picked;
 @synthesize delegate;
 
 -(void)updateView
 {
-    if(clicked == NO)
+    //Only update if not picked
+    if(picked == NO)
     {
         [self setNeedsDisplay];
         int idToPassBack = id;
@@ -39,7 +40,7 @@
     if (self)
     {
         // Initialization code
-        clicked = NO;
+        picked = NO;
         
     }
     return self;
@@ -47,7 +48,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-   // NSLog(@"trace clicked: %d", clicked);
    // NSLog(@"trace ID: %i", id);
     
     //PICK UP THE PEN
@@ -74,20 +74,17 @@
         CGContextMoveToPoint(context, b.size.width, b.origin.y);
         CGContextAddLineToPoint(context, b.origin.x, b.size.height);
         tag = 2;
-        //clicked = YES;
     }
     else if([self tag] == 2)
     {
         //DRAW O
         CGContextStrokeEllipseInRect(context, e);
         tag = -1;
-       // clicked = YES;
     }
     else
     {
         //DRAW NOTHING
         tag = 1;
-        //clicked = NO;
     }
     
     CGContextStrokePath(context);

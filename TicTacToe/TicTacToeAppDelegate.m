@@ -40,8 +40,6 @@
     v7 = [[MyView alloc] initWithFrame:frame07];
     v8 = [[MyView alloc] initWithFrame:frame08];
         
-    // MyView *v2 = [[MyView alloc] initWithFrame:frame02];
-    
     [v0 setBackgroundColor: [UIColor redColor]];
     [v1 setBackgroundColor: [UIColor redColor]];
     [v2 setBackgroundColor: [UIColor redColor]];
@@ -72,8 +70,6 @@
     [v7 setId:7];
     [v8 setId:8];
     
-    
-    //[v1 setClicked:NO];
     v0.delegate = self;
     v1.delegate = self;
     v2.delegate = self;
@@ -130,14 +126,11 @@
     NSLog(@"CONFIRMED!");
     
     MyView *tempView = [tileArray objectAtIndex:currentTile];
-    //NSLog(@"MYVIEW TAG: %i", tempView.tag);
+
     if (tempView.tag!= 1)
     {
-        [[tileArray objectAtIndex:currentTile] setClicked:YES];
+        [[tileArray objectAtIndex:currentTile] setPicked:YES];
     }
-    
-    
-    //[[tileArray objectAtIndex:currentTile] setBackgroundColor: [UIColor blueColor]];
     
 }
 
@@ -152,7 +145,7 @@
     for (i = 0; i < count; i++)
     {
         //MyView *tempView = [tileArray objectAtIndex:i];
-        [[tileArray objectAtIndex:i] setClicked:NO];
+        [[tileArray objectAtIndex:i] setPicked:NO];
         [[tileArray objectAtIndex:i] resetView];
     }
 }
@@ -165,7 +158,7 @@
     if (previousTile != currentTile  && previousTile != -1)
     {
         MyView *tempView = [tileArray objectAtIndex:previousTile];
-        if(tempView.clicked == NO)
+        if(tempView.picked == NO)
         {
             NSLog(@"previous tile not matched to currentTile %i %i", currentTile, previousTile);
             [[tileArray objectAtIndex:previousTile] resetView];
@@ -173,33 +166,6 @@
     }
     
     previousTile = currentTile;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 @end
