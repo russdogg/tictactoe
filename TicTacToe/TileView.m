@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 RussDesigns. All rights reserved.
 //
 
-#import "MyView.h"
+#import "TileView.h"
 
 
-@implementation MyView
+@implementation TileView
 
 @synthesize tag;
 @synthesize id;

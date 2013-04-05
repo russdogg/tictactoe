@@ -5,7 +5,7 @@
 //  Created by Russ D on 3/21/13.
 //  Copyright (c) 2013 RussDesigns. All rights reserved.
 //
-#import "MyView.h"
+#import "TileView.h"
 #import "TicTacToeAppDelegate.h"
 
 @implementation TicTacToeAppDelegate
@@ -39,15 +39,15 @@
     CGRect frame07 = CGRectMake(120, 300, 80, 80);
     CGRect frame08 = CGRectMake(220, 300, 80, 80);
     
-    v0 = [[MyView alloc] initWithFrame:frame00];
-    v1 = [[MyView alloc] initWithFrame:frame01];
-    v2 = [[MyView alloc] initWithFrame:frame02];
-    v3 = [[MyView alloc] initWithFrame:frame03];
-    v4 = [[MyView alloc] initWithFrame:frame04];
-    v5 = [[MyView alloc] initWithFrame:frame05];
-    v6 = [[MyView alloc] initWithFrame:frame06];
-    v7 = [[MyView alloc] initWithFrame:frame07];
-    v8 = [[MyView alloc] initWithFrame:frame08];
+    v0 = [[TileView alloc] initWithFrame:frame00];
+    v1 = [[TileView alloc] initWithFrame:frame01];
+    v2 = [[TileView alloc] initWithFrame:frame02];
+    v3 = [[TileView alloc] initWithFrame:frame03];
+    v4 = [[TileView alloc] initWithFrame:frame04];
+    v5 = [[TileView alloc] initWithFrame:frame05];
+    v6 = [[TileView alloc] initWithFrame:frame06];
+    v7 = [[TileView alloc] initWithFrame:frame07];
+    v8 = [[TileView alloc] initWithFrame:frame08];
         
     [v0 setBackgroundColor: [UIColor redColor]];
     [v1 setBackgroundColor: [UIColor redColor]];
@@ -151,7 +151,7 @@
             whoseTurn = 0;
         }
         
-        MyView *tempView = [tileArray objectAtIndex:currentTile];
+        TileView *tempView = [tileArray objectAtIndex:currentTile];
         
         if (tempView.tag!= -1)
         {
@@ -225,7 +225,7 @@
     currentTile = tile;
     if (previousTile != currentTile  && previousTile != -1)
     {
-        MyView *tempView = [tileArray objectAtIndex:previousTile];
+        TileView *tempView = [tileArray objectAtIndex:previousTile];
         if(tempView.picked == NO)
         {
             NSLog(@"previous tile not matched to currentTile %i %i", currentTile, previousTile);

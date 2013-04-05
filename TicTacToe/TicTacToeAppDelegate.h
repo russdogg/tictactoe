@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyView.h"
+#import "TileView.h"
 
 
 @interface TicTacToeAppDelegate : UIResponder <UIApplicationDelegate, MyViewDelegate>
@@ -21,14 +21,14 @@
 @property BOOL tileChosen;
 
 @property NSArray *tileArray;
-@property (strong, nonatomic) MyView *v0;
-@property (strong, nonatomic) MyView *v1;
-@property (strong, nonatomic) MyView *v2;
-@property (strong, nonatomic) MyView *v3;
-@property (strong, nonatomic) MyView *v4;
-@property (strong, nonatomic) MyView *v5;
-@property (strong, nonatomic) MyView *v6;
-@property (strong, nonatomic) MyView *v7;
-@property (strong, nonatomic) MyView *v8;
+@property (strong, nonatomic) TileView *v0;
+@property (strong, nonatomic) TileView *v1;
+@property (strong, nonatomic) TileView *v2;
+@property (strong, nonatomic) TileView *v3;
+@property (strong, nonatomic) TileView *v4;
+@property (strong, nonatomic) TileView *v5;
+@property (strong, nonatomic) TileView *v6;
+@property (strong, nonatomic) TileView *v7;
+@property (strong, nonatomic) TileView *v8;
 
 @end

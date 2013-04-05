@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MyView;
+@class TileView;
 
 @protocol MyViewDelegate <NSObject>
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface MyView : UIView
+@interface TileView : UIView
 {
     int tag;
     int id;

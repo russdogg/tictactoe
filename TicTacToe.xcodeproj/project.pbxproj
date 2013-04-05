@@ -16,7 +16,7 @@
 		C19EEEAC16FBFF6A00A71EF4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EEEAB16FBFF6A00A71EF4 /* Default.png */; };
 		C19EEEAE16FBFF6A00A71EF4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EEEAD16FBFF6A00A71EF4 /* Default@2x.png */; };
 		C19EEEB016FBFF6B00A71EF4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EEEAF16FBFF6B00A71EF4 /* Default-568h@2x.png */; };
-		C19EEEB816FBFFDE00A71EF4 /* MyView.m in Sources */ = {isa = PBXBuildFile; fileRef = C19EEEB716FBFFDE00A71EF4 /* MyView.m */; };
+		C19EEEB816FBFFDE00A71EF4 /* TileView.m in Sources */ = {isa = PBXBuildFile; fileRef = C19EEEB716FBFFDE00A71EF4 /* TileView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +33,8 @@
 		C19EEEAB16FBFF6A00A71EF4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C19EEEAD16FBFF6A00A71EF4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C19EEEAF16FBFF6B00A71EF4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		C19EEEB616FBFFDE00A71EF4 /* MyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
-		C19EEEB716FBFFDE00A71EF4 /* MyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyView.m; sourceTree = "<group>"; };
+		C19EEEB616FBFFDE00A71EF4 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileView.h; sourceTree = "<group>"; };
+		C19EEEB716FBFFDE00A71EF4 /* TileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +83,8 @@
 			children = (
 				C19EEEA816FBFF6A00A71EF4 /* TicTacToeAppDelegate.h */,
 				C19EEEA916FBFF6A00A71EF4 /* TicTacToeAppDelegate.m */,
-				C19EEEB616FBFFDE00A71EF4 /* MyView.h */,
-				C19EEEB716FBFFDE00A71EF4 /* MyView.m */,
+				C19EEEB616FBFFDE00A71EF4 /* TileView.h */,
+				C19EEEB716FBFFDE00A71EF4 /* TileView.m */,
 				C19EEEA016FBFF6A00A71EF4 /* Supporting Files */,
 			);
 			path = TicTacToe;
@@ -172,7 +172,7 @@
 			files = (
 				C19EEEA616FBFF6A00A71EF4 /* main.m in Sources */,
 				C19EEEAA16FBFF6A00A71EF4 /* TicTacToeAppDelegate.m in Sources */,
-				C19EEEB816FBFFDE00A71EF4 /* MyView.m in Sources */,
+				C19EEEB816FBFFDE00A71EF4 /* TileView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +287,7 @@
 				C19EEEB516FBFF6B00A71EF4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
