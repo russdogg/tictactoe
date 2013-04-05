@@ -20,10 +20,9 @@
     CGRect titleFrame = CGRectMake(0, 30, 320, 50);
     
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
-    titleLabel.text = @"Player X's turn!";
+    titleLabel.text = @"PLAYER X's TURN!";
     titleLabel.textColor = [UIColor redColor];
-    
-    titleLabel.font = [UIFont systemFontOfSize:26.0];
+    titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:30.0];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
     //DRAW VIEW TILES
@@ -112,8 +111,9 @@
     CGRect confirmFrame = CGRectMake(20.0f, 420.0f, 120.0f, 40.0f);
     UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmFrame];
     [confirmButton setBackgroundColor:[UIColor redColor]];
-    [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
-    
+    [confirmButton setTitle:@"CONFIRM" forState:UIControlStateNormal];
+    [confirmButton setTitle:@"CONFIRMING" forState:UIControlStateHighlighted];
+    confirmButton.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:21.0];
     [confirmButton addTarget:self action:@selector(confirmChoice) forControlEvents:UIControlEventTouchUpInside];
     
     [self.window addSubview:confirmButton];
@@ -123,8 +123,9 @@
     CGRect resetFrame = CGRectMake(180.0f, 420.0f, 120.0f, 40.0f);
     UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
     [resetButton setBackgroundColor:[UIColor redColor]];
-    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
-    
+    [resetButton setTitle:@"RESET" forState:UIControlStateNormal];
+    [resetButton setTitle:@"RESETTING" forState:UIControlStateHighlighted];
+    resetButton.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:21.0];
     [resetButton addTarget:self action:@selector(resetGame) forControlEvents:UIControlEventTouchUpInside];
     
     [self.window addSubview:resetButton];
@@ -183,16 +184,16 @@
 {
     if (whoseTurn == 0)
     {
-        titleLabel.text = @"Player X's turn!";
+        titleLabel.text = @"PLAYER X's TURN!";
     }
     else
     {
-        titleLabel.text = @"Player O's turn!";
+        titleLabel.text = @"PLAYER O's TURN!";
     }
     
     if (currRound ==9)
     {
-        titleLabel.text = @"Tied Game :(";
+        titleLabel.text = @"TIED GAME :(";
     }
     tileChosen = NO;
 }
@@ -200,6 +201,11 @@
 -(void)resetGame
 {
     NSLog(@"RESET THE GAME!");
+    titleLabel.text = @"PLAYER X's TURN";
+    currRound = 0;
+    whoseTurn = 0;
+    tileChosen = NO;
+    
     int i;
     int count;
     
@@ -208,15 +214,10 @@
     for (i = 0; i < count; i++)
     {
         [[tileArray objectAtIndex:i] setPicked:NO];
+        [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
         [[tileArray objectAtIndex:i] resetView];
-    }
-    
-    titleLabel.text = @"Player X's turn!";
-    currRound = 0;
-    whoseTurn = 0;
-    tileChosen = NO;
+    }    
 }
-
 
 - (void)didSelectTile:(int)tile
 {

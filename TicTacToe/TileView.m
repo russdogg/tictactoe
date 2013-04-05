@@ -75,7 +75,7 @@
     {
         if([self whoseTurn] == 0)
         {
-            //DRAW X
+            //DRAW "X"
             CGContextMoveToPoint(context, b.origin.x, b.origin.y);
             CGContextAddLineToPoint(context, b.size.width, b.size.height);
         
@@ -86,20 +86,21 @@
         
         else if([self whoseTurn] == 1)
         {
-            //DRAW O
+            //DRAW "O"
             CGContextStrokeEllipseInRect(context, e);
            
         }
-       
+       //FINISH STOKING THE PATH
         CGContextStrokePath(context);
     }
     
+    //CREATE MAIN BUTTON
     CGRect bFrame = CGRectMake(0.0f, 0.0f, 75.0f, 75.0f);
-    UIButton *myButton = [[UIButton alloc] initWithFrame:bFrame];
+    UIButton *mainButton = [[UIButton alloc] initWithFrame:bFrame];
     
-    [myButton addTarget:self action:@selector(updateView) forControlEvents:UIControlEventTouchUpInside];
+    [mainButton addTarget:self action:@selector(updateView) forControlEvents:UIControlEventTouchUpInside];
     
-    [self addSubview:myButton];
+    [self addSubview:mainButton];
 }
 
 @end
