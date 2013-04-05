@@ -13,8 +13,12 @@
 @interface TicTacToeAppDelegate : UIResponder <UIApplicationDelegate, MyViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UILabel *titleLabel;
 @property int currentTile;
 @property int previousTile;
+@property int whoseTurn;
+@property int currRound;
+@property BOOL tileChosen;
 
 @property NSArray *tileArray;
 @property (strong, nonatomic) MyView *v0;

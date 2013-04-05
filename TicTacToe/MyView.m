@@ -14,13 +14,16 @@
 @synthesize tag;
 @synthesize id;
 @synthesize picked;
+@synthesize whoseTurn;
 @synthesize delegate;
 
 -(void)updateView
 {
-    //Only update if not picked
+    //Only update if this tile is not picked
     if(picked == NO)
     {
+        tag = 1;
+
         [self setNeedsDisplay];
         int idToPassBack = id;
         [self.delegate didSelectTile:idToPassBack];
@@ -29,9 +32,12 @@
 
 -(void)resetView
 {
+    if(picked == NO)
+    {
     NSLog(@"resetView");
     tag = -1;
     [self setNeedsDisplay];
+    }
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -41,6 +47,7 @@
     {
         // Initialization code
         picked = NO;
+        whoseTurn = 0;
         
     }
     return self;
@@ -64,42 +71,35 @@
     
     CGRect e = CGRectMake(2.0, 2.0, 78.0, 78.0);
     
-    
-    if([self tag] == 1)
+    if (tag == 1)
     {
-        //DRAW X
-        CGContextMoveToPoint(context, b.origin.x, b.origin.y);
-        CGContextAddLineToPoint(context, b.size.width, b.size.height);
+        if([self whoseTurn] == 0)
+        {
+            //DRAW X
+            CGContextMoveToPoint(context, b.origin.x, b.origin.y);
+            CGContextAddLineToPoint(context, b.size.width, b.size.height);
         
-        CGContextMoveToPoint(context, b.size.width, b.origin.y);
-        CGContextAddLineToPoint(context, b.origin.x, b.size.height);
-        tag = 2;
-    }
-    else if([self tag] == 2)
-    {
-        //DRAW O
-        CGContextStrokeEllipseInRect(context, e);
-        tag = -1;
-    }
-    else
-    {
-        //DRAW NOTHING
-        tag = 1;
+            CGContextMoveToPoint(context, b.size.width, b.origin.y);
+            CGContextAddLineToPoint(context, b.origin.x, b.size.height);
+            
+        }
+        
+        else if([self whoseTurn] == 1)
+        {
+            //DRAW O
+            CGContextStrokeEllipseInRect(context, e);
+           
+        }
+       
+        CGContextStrokePath(context);
     }
     
-    CGContextStrokePath(context);
     CGRect bFrame = CGRectMake(0.0f, 0.0f, 75.0f, 75.0f);
     UIButton *myButton = [[UIButton alloc] initWithFrame:bFrame];
-    //[myButton setBackgroundColor:[UIColor blackColor]];
-    //[myButton setTitle:@"Click me" forState:UIControlStateNormal];
     
     [myButton addTarget:self action:@selector(updateView) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:myButton];
 }
-
-
-
-
 
 @end
