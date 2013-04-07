@@ -10,7 +10,7 @@
 
 @implementation TicTacToeAppDelegate
 
-@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, currRound, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8;
+@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -102,6 +102,8 @@
     
     
     tileArray = [[NSArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
+    choiceArray = [[NSMutableArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
+    
     previousTile = -1;
     whoseTurn = 0;
     currRound = 0;
@@ -141,6 +143,7 @@
 {
     if (tileChosen)
     {
+        //ADVANCE ROUND COUNT
         currRound ++;
         
         if (whoseTurn == 0)
@@ -156,7 +159,8 @@
         
         if (tempView.tag!= -1)
         {
-            [[tileArray objectAtIndex:currentTile] setPicked:YES];
+            [[tileArray objectAtIndex:currentTile] setTileLocked:YES];
+            
         }
         
         int i;
@@ -169,12 +173,15 @@
             [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
             [[tileArray objectAtIndex:i] resetView];
         }
-
+        
         
         NSLog(@"CONFIRMED! currRound: %i, whoseTurn: %i", currRound, whoseTurn);
         
+        [UIView animateWithDuration:0.35
+                         animations:^{titleLabel.alpha = 0.0;}
+                         completion:^(BOOL finished){ [self updateAfterRound]; }];
         
-        [self updateAfterRound];
+        //[self updateAfterRound];
     }
     
     
@@ -190,12 +197,17 @@
     {
         titleLabel.text = @"PLAYER O's TURN!";
     }
+    NSLog(@"ROUND COUNT: %i", currRound + 1);
     
-    if (currRound ==9)
-    {
-        titleLabel.text = @"TIED GAME :(";
-    }
+    //if (currRound ==9)
+    //{
+     //   titleLabel.text = @"TIED GAME :(";
+    //}
     tileChosen = NO;
+    
+    [UIView animateWithDuration:0.35
+                     animations:^{titleLabel.alpha = 1.0;}];
+    
 }
 
 -(void)resetGame
@@ -213,7 +225,7 @@
     
     for (i = 0; i < count; i++)
     {
-        [[tileArray objectAtIndex:i] setPicked:NO];
+        [[tileArray objectAtIndex:i] setTileLocked:NO];
         [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
         [[tileArray objectAtIndex:i] resetView];
     }    
@@ -224,16 +236,18 @@
     NSLog(@"Returned from Tile Myview %i",tile);
     tileChosen = YES;
     currentTile = tile;
+    //IF JUST TAPPED TILE ISNT THE SAME AS LAST TILE AND THIS ISNT THE FIRST PICKED TILE
     if (previousTile != currentTile  && previousTile != -1)
     {
         TileView *tempView = [tileArray objectAtIndex:previousTile];
-        if(tempView.picked == NO)
+        if(tempView.tileLocked == NO)
         {
             NSLog(@"previous tile not matched to currentTile %i %i", currentTile, previousTile);
+            //RESET LAST PICKED TILE
             [[tileArray objectAtIndex:previousTile] resetView];
         }
     }
-    
+    //UPDATE PREVIOUS TILE INT FOR NEXT ROUND
     previousTile = currentTile;
 }
 

@@ -21,6 +21,7 @@
 @property BOOL tileChosen;
 
 @property NSArray *tileArray;
+@property NSArray *choiceArray;
 @property (strong, nonatomic) TileView *v0;
 @property (strong, nonatomic) TileView *v1;
 @property (strong, nonatomic) TileView *v2;

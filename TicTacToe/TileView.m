@@ -13,14 +13,14 @@
 
 @synthesize tag;
 @synthesize id;
-@synthesize picked;
+@synthesize tileLocked;
 @synthesize whoseTurn;
 @synthesize delegate;
 
 -(void)updateView
 {
     //Only update if this tile is not picked
-    if(picked == NO)
+    if(tileLocked == NO)
     {
         tag = 1;
 
@@ -32,11 +32,10 @@
 
 -(void)resetView
 {
-    if(picked == NO)
+    if(tileLocked == NO)
     {
-    NSLog(@"resetView");
-    tag = -1;
-    [self setNeedsDisplay];
+        tag = -1;
+        [self setNeedsDisplay];
     }
 }
 
@@ -46,7 +45,7 @@
     if (self)
     {
         // Initialization code
-        picked = NO;
+        tileLocked = NO;
         whoseTurn = 0;
         
     }
@@ -55,13 +54,13 @@
 
 - (void)drawRect:(CGRect)rect
 {
-   // NSLog(@"trace ID: %i", id);
+  // NSLog(@"trace TILE ID: %i", id);
     
     //PICK UP THE PEN
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     //SET PEN WIDTH
-    CGContextSetLineWidth(context, 8);
+    CGContextSetLineWidth(context, 10);
     
     //SET PEN COLOR
     CGContextSetRGBStrokeColor(context, 50.0, 2.0, 9.0, 1.0);
@@ -76,6 +75,7 @@
         if([self whoseTurn] == 0)
         {
             //DRAW "X"
+            NSLog(@"Draw X");
             CGContextMoveToPoint(context, b.origin.x, b.origin.y);
             CGContextAddLineToPoint(context, b.size.width, b.size.height);
         
@@ -87,6 +87,7 @@
         else if([self whoseTurn] == 1)
         {
             //DRAW "O"
+            NSLog(@"Draw O");
             CGContextStrokeEllipseInRect(context, e);
            
         }

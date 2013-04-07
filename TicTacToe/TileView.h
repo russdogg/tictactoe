@@ -12,7 +12,7 @@
 
 @protocol MyViewDelegate <NSObject>
 
-- (void)didSelectTile:(int)tile;
+- (void)didSelectTile:(int)tile ;
 
 @end
 
@@ -21,14 +21,14 @@
     int tag;
     int id;
     int whoseTurn;
-    BOOL picked;
+    BOOL tileLocked;
 }
 @property (nonatomic, weak) id <MyViewDelegate> delegate;
 
 @property (nonatomic, assign) int tag;
 @property (nonatomic, assign) int id;
 @property (nonatomic, assign) int whoseTurn;
-@property (nonatomic, assign) BOOL picked;
+@property (nonatomic, assign) BOOL tileLocked;
 
 -(void)resetView;
 -(void)updateView;
