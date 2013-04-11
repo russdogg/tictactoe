@@ -60,7 +60,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     //SET PEN WIDTH
-    CGContextSetLineWidth(context, 10);
+    CGContextSetLineWidth(context, 22);
     
     //SET PEN COLOR
     CGContextSetRGBStrokeColor(context, 50.0, 2.0, 9.0, 1.0);

@@ -32,4 +32,6 @@
 @property (strong, nonatomic) TileView *v7;
 @property (strong, nonatomic) TileView *v8;
 
+@property (strong, nonatomic) UIImageView *defaultImageView;
+
 @end

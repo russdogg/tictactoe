@@ -10,19 +10,25 @@
 
 @implementation TicTacToeAppDelegate
 
-@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8;
+@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    UIImage * defaultImage = [UIImage imageNamed: @"Default.png"];
+    defaultImageView = [[UIImageView alloc] initWithImage: defaultImage];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    [self.window addSubview:defaultImageView];
     
     //TITLE FRAME
     CGRect titleFrame = CGRectMake(0, 30, 320, 50);
     
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
-    titleLabel.text = @"PLAYER X's TURN!";
+    titleLabel.text = @"Player X's turn!";
     titleLabel.textColor = [UIColor redColor];
-    titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:30.0];
+    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
     //DRAW VIEW TILES
@@ -99,7 +105,7 @@
     [self.window addSubview:v6];
     [self.window addSubview:v7];
     [self.window addSubview:v8];
-    
+        
     
     tileArray = [[NSArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
     choiceArray = [[NSMutableArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
@@ -113,9 +119,9 @@
     CGRect confirmFrame = CGRectMake(20.0f, 420.0f, 120.0f, 40.0f);
     UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmFrame];
     [confirmButton setBackgroundColor:[UIColor redColor]];
-    [confirmButton setTitle:@"CONFIRM" forState:UIControlStateNormal];
-    [confirmButton setTitle:@"CONFIRMING" forState:UIControlStateHighlighted];
-    confirmButton.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:21.0];
+    [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
+    [confirmButton setTitle:@"Confirming" forState:UIControlStateHighlighted];
+    confirmButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
     [confirmButton addTarget:self action:@selector(confirmChoice) forControlEvents:UIControlEventTouchUpInside];
     
     [self.window addSubview:confirmButton];
@@ -125,9 +131,9 @@
     CGRect resetFrame = CGRectMake(180.0f, 420.0f, 120.0f, 40.0f);
     UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
     [resetButton setBackgroundColor:[UIColor redColor]];
-    [resetButton setTitle:@"RESET" forState:UIControlStateNormal];
-    [resetButton setTitle:@"RESETTING" forState:UIControlStateHighlighted];
-    resetButton.titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:21.0];
+    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
+    [resetButton setTitle:@"Reseting" forState:UIControlStateHighlighted];
+    resetButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
     [resetButton addTarget:self action:@selector(resetGame) forControlEvents:UIControlEventTouchUpInside];
     
     [self.window addSubview:resetButton];
@@ -136,14 +142,32 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    [self.window addSubview:defaultImageView];
+    
+    [self performSelector:@selector(hideImage) withObject:nil afterDelay:2.0];
+    
     return YES;
 }
+
+
+
+
+-(void)hideImage
+{
+    
+    defaultImageView.hidden = YES;
+}
+
 
 -(void)confirmChoice
 {
     if (tileChosen)
     {
         //ADVANCE ROUND COUNT
+        NSLog(@"CONFIRMED! currRound: %i, whoseTurn: %i", currRound, whoseTurn);
+        
         currRound ++;
         
         if (whoseTurn == 0)
@@ -175,12 +199,14 @@
         }
         
         
-        NSLog(@"CONFIRMED! currRound: %i, whoseTurn: %i", currRound, whoseTurn);
+        
         
         [UIView animateWithDuration:0.35
                          animations:^{titleLabel.alpha = 0.0;}
                          completion:^(BOOL finished){ [self updateAfterRound]; }];
         
+        NSLog(@"CurrentTile: %i", currentTile);
+        //NEED TO UPDATE CHOSEN ARRAY WITH THIS ITEM< EITHER X OR O, 0 or 1
         //[self updateAfterRound];
     }
     
@@ -191,11 +217,11 @@
 {
     if (whoseTurn == 0)
     {
-        titleLabel.text = @"PLAYER X's TURN!";
+        titleLabel.text = @"Player X's Turn!";
     }
     else
     {
-        titleLabel.text = @"PLAYER O's TURN!";
+        titleLabel.text = @"Player O's Turn!";
     }
     NSLog(@"ROUND COUNT: %i", currRound + 1);
     
@@ -213,7 +239,7 @@
 -(void)resetGame
 {
     NSLog(@"RESET THE GAME!");
-    titleLabel.text = @"PLAYER X's TURN";
+    titleLabel.text = @"Player X's Turn!";
     currRound = 0;
     whoseTurn = 0;
     tileChosen = NO;
