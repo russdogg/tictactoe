@@ -1,4 +1,4 @@
-tictactoe
+Helvetic-Tac-Toe
 =========
 
 Description:
