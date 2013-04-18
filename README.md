@@ -7,9 +7,8 @@ A simple IOS tictactoe game from scratch.
 
 **Two views:**
 
-**App Delegate** which controls layout and logic.
-
-**TileView** which draws the X or O.
+*App Delegate*: which controls layout and logic.
+*TileView*: which draws the X or O.
 
 Remaining To Do Items:
 ----------------------
@@ -25,6 +24,6 @@ Remaining To Do Items:
 + √ Stop game on win, maybe hide board or fade out or something
 + Finish Game screen?
 + Hide Confirm button on game end? or fade out and remove click event
-+ Button Highlighting on click
++ Highlighting button of selected tiles
 + √ Splash screen - still needs work on iphone 5
-+ √icons
++ √ home screen icons
