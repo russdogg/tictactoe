@@ -10,7 +10,7 @@
 
 @implementation TicTacToeAppDelegate
 
-@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView;
+@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, isWinner, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -108,12 +108,19 @@
         
     
     tileArray = [[NSArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
-    choiceArray = [[NSMutableArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
+   
+    
+    choiceArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1], nil];
+    
+    
+    
+    //choiceArray = [[NSMutableArray alloc] initWithCapacity:9] ;
     
     previousTile = -1;
     whoseTurn = 0;
     currRound = 0;
     tileChosen = NO;
+    isWinner = NO;
     
     //CONFIRM BUTTON
     CGRect confirmFrame = CGRectMake(20.0f, 420.0f, 120.0f, 40.0f);
@@ -151,66 +158,218 @@
     return YES;
 }
 
-
-
-
 -(void)hideImage
 {
-    
     defaultImageView.hidden = YES;
 }
 
+-(void)checkScore
+{
+    NSLog(@"SCORE CHECK: currRound: %i, whoseTurn: %i, currentTile: %i", currRound, whoseTurn, currentTile);
+    int i;
+    int count;
+    count = 9;
+    
+    int topRowFirstInt = [[choiceArray objectAtIndex:0] integerValue];
+    int topRowMiddleInt = [[choiceArray objectAtIndex:1] integerValue];
+    int topRowLastInt = [[choiceArray objectAtIndex:2] integerValue];
+    int middleRowFirstInt = [[choiceArray objectAtIndex:3] integerValue];
+    int bottomRowFirstInt = [[choiceArray objectAtIndex:6] integerValue];
+    
+    //TOP ROW HORIZONTAL CHECK
+    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:0] integerValue], [[choiceArray objectAtIndex:1] integerValue], [[choiceArray objectAtIndex:2] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:1]]
+        && [[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:2]])
+    {
+        if (topRowFirstInt != -1)
+        {
+            NSLog(@"### WINNER ### - TOP ROW IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //MIDDLE ROW HORIZONTAL CHECK
+    NSLog(@"MIDDLE ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:3] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:5] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:3] isEqual: [choiceArray objectAtIndex:4]]
+        && [[choiceArray objectAtIndex:3] isEqual: [choiceArray objectAtIndex:5]])
+    {
+        if (middleRowFirstInt != -1)
+        {
+            NSLog(@"### WINNER ### - MIDDLE ROW IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //BOTTOM ROW HORIZONTAL CHECK
+    NSLog(@"BOTTOM ROW CHECK: : %i, %i, %i", [[choiceArray objectAtIndex:6] integerValue], [[choiceArray objectAtIndex:7] integerValue], [[choiceArray objectAtIndex:8] integerValue]);
+    
+    if([[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:7]]
+       && [[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:8]])
+    {
+        if (bottomRowFirstInt != -1)
+        {
+            NSLog(@"### WINNER ### - BOTTOM ROW IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //FIRST COLUMN VERTICAL CHECK
+    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:0] integerValue], [[choiceArray objectAtIndex:3] integerValue], [[choiceArray objectAtIndex:6] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:3]]
+        && [[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:6]])
+    {
+        if (topRowFirstInt != -1)
+        {
+            NSLog(@"### WINNER ### - FIRST VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //SECOND COLUMN VERTICAL CHECK
+    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:1] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:7] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:1] isEqual: [choiceArray objectAtIndex:4]]
+        && [[choiceArray objectAtIndex:1] isEqual: [choiceArray objectAtIndex:7]])
+    {
+        if (topRowMiddleInt != -1)
+        {
+            NSLog(@"### WINNER ### - SECOND VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //THIRD COLUMN VERTICAL CHECK
+    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:2] integerValue], [[choiceArray objectAtIndex:5] integerValue], [[choiceArray objectAtIndex:8] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:2] isEqual: [choiceArray objectAtIndex:5]]
+        && [[choiceArray objectAtIndex:2] isEqual: [choiceArray objectAtIndex:8]])
+    {
+        if (topRowLastInt != -1)
+        {
+            NSLog(@"### WINNER ### - THIRD VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //TOP CORNER DIAGONAL CHECK
+    NSLog(@"TOP DIAGONAL CHECK: %i, %i, %i", [[choiceArray objectAtIndex:0] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:8] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:4]]
+        && [[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:8]])
+    {
+        if (topRowFirstInt != -1)
+        {
+            NSLog(@"### WINNER ### - FIRST DIAGONAL COLUMN IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    //BOTTOM CORNER DIAGONAL CHECK
+    NSLog(@"BOTTOM DIAGONAL CHECK: %i, %i, %i", [[choiceArray objectAtIndex:6] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:2] integerValue]);
+    
+    if ([[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:4]]
+        && [[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:2]])
+    {
+        if (bottomRowFirstInt != -1)
+        {
+            NSLog(@"### WINNER ### - BOTTOM DIAGONAL COLUMN IS ALL THE SAME and NOT -1.");
+            isWinner = YES;
+        }
+    }
+    
+    if (isWinner)
+    {
+        NSLog(@"WINNER!!");
+        
+        if (whoseTurn == 0)
+        {
+            titleLabel.text = @"X Wins!";
+        }
+        else
+        {
+            titleLabel.text = @"O Wins!";
+        }
+        
+        
+        
+        for (i = 0; i < count; i++)
+        {
+            [[tileArray objectAtIndex:i] setTileLocked:YES];
+        }
+       
+    }
+    else
+    {
+        if(currRound == 8)
+        {
+            titleLabel.text =  @"Tied Game :(";
+            for (i = 0; i < count; i++)
+            {
+                [[tileArray objectAtIndex:i] setTileLocked:YES];
+            }
+        }
+        else
+        {
+         [self continueRound];   
+        }
+    }
+    
+    
+}
+
+-(void)continueRound
+{
+    //ADVANCE ROUND COUNT
+    //NSLog(@"CONFIRMED! currRound: %i, whoseTurn: %i", currRound, whoseTurn);
+    
+    currRound ++;
+    
+    if (whoseTurn == 0)
+    {
+        whoseTurn = 1;
+    }
+    else
+    {
+        whoseTurn = 0;
+    }
+    
+    TileView *tempView = [tileArray objectAtIndex:currentTile];
+    
+    if (tempView.tag!= -1)
+    {
+        [[tileArray objectAtIndex:currentTile] setTileLocked:YES];
+        
+    }
+    
+    int i;
+    int count;
+    
+    count = [tileArray count];
+    
+    for (i = 0; i < count; i++)
+    {
+        [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
+        [[tileArray objectAtIndex:i] resetView];
+    }
+    
+    [UIView animateWithDuration:0.35
+                     animations:^{titleLabel.alpha = 0.0;}
+                     completion:^(BOOL finished){ [self updateAfterRound]; }];
+}
 
 -(void)confirmChoice
 {
     if (tileChosen)
     {
-        //ADVANCE ROUND COUNT
-        NSLog(@"CONFIRMED! currRound: %i, whoseTurn: %i", currRound, whoseTurn);
+        NSLog(@"Pushing: %i to this spot in array index: %i", whoseTurn, currentTile);
         
-        currRound ++;
+        [choiceArray replaceObjectAtIndex:currentTile withObject:[NSNumber numberWithInt:whoseTurn] ];
         
-        if (whoseTurn == 0)
-        {
-            whoseTurn = 1;
-        }
-        else
-        {
-            whoseTurn = 0;
-        }
-        
-        TileView *tempView = [tileArray objectAtIndex:currentTile];
-        
-        if (tempView.tag!= -1)
-        {
-            [[tileArray objectAtIndex:currentTile] setTileLocked:YES];
-            
-        }
-        
-        int i;
-        int count;
-        
-        count = [tileArray count];
-        
-        for (i = 0; i < count; i++)
-        {
-            [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
-            [[tileArray objectAtIndex:i] resetView];
-        }
-        
-        
-        
-        
-        [UIView animateWithDuration:0.35
-                         animations:^{titleLabel.alpha = 0.0;}
-                         completion:^(BOOL finished){ [self updateAfterRound]; }];
-        
-        NSLog(@"CurrentTile: %i", currentTile);
-        //NEED TO UPDATE CHOSEN ARRAY WITH THIS ITEM< EITHER X OR O, 0 or 1
-        //[self updateAfterRound];
+        [self checkScore];
     }
-    
-    
 }
 
 -(void)updateAfterRound
@@ -223,17 +382,9 @@
     {
         titleLabel.text = @"Player O's Turn!";
     }
-    NSLog(@"ROUND COUNT: %i", currRound + 1);
-    
-    //if (currRound ==9)
-    //{
-     //   titleLabel.text = @"TIED GAME :(";
-    //}
     tileChosen = NO;
-    
     [UIView animateWithDuration:0.35
                      animations:^{titleLabel.alpha = 1.0;}];
-    
 }
 
 -(void)resetGame
@@ -243,32 +394,34 @@
     currRound = 0;
     whoseTurn = 0;
     tileChosen = NO;
+    isWinner = NO;
     
     int i;
     int count;
-    
-    count = [tileArray count];
+    count = 9;
     
     for (i = 0; i < count; i++)
     {
         [[tileArray objectAtIndex:i] setTileLocked:NO];
         [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
         [[tileArray objectAtIndex:i] resetView];
+        
+        [choiceArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:-1]];
     }    
 }
 
+
 - (void)didSelectTile:(int)tile
 {
-    NSLog(@"Returned from Tile Myview %i",tile);
     tileChosen = YES;
     currentTile = tile;
+    
     //IF JUST TAPPED TILE ISNT THE SAME AS LAST TILE AND THIS ISNT THE FIRST PICKED TILE
     if (previousTile != currentTile  && previousTile != -1)
     {
         TileView *tempView = [tileArray objectAtIndex:previousTile];
         if(tempView.tileLocked == NO)
         {
-            NSLog(@"previous tile not matched to currentTile %i %i", currentTile, previousTile);
             //RESET LAST PICKED TILE
             [[tileArray objectAtIndex:previousTile] resetView];
         }
@@ -276,5 +429,4 @@
     //UPDATE PREVIOUS TILE INT FOR NEXT ROUND
     previousTile = currentTile;
 }
-
 @end

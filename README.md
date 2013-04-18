@@ -21,10 +21,10 @@ Remaining To Do Items:
 + √ Reset game on click of reset button
 + √ Customize fonts in UIButton labels
 + √ **Score logic:** add logic for tied game
-+ **Score logic:** add logic for a winning game, identify winner
-+ Stop game on win, maybe hide board or fade out or something
-+ Finish Game screen
-+ Hide Confirm button on game end
-+ Button Highlighting
-+ Splash screen
-+ icons
++ √ **Score logic:** add logic for a winning game, identify winner
++ √ Stop game on win, maybe hide board or fade out or something
++ Finish Game screen?
++ Hide Confirm button on game end? or fade out and remove click event
++ Button Highlighting on click
++ √ Splash screen - still needs work on iphone 5
++ √icons

@@ -19,9 +19,10 @@
 @property int whoseTurn;
 @property int currRound;
 @property BOOL tileChosen;
+@property BOOL isWinner;
 
 @property NSArray *tileArray;
-@property NSArray *choiceArray;
+@property NSMutableArray *choiceArray;
 @property (strong, nonatomic) TileView *v0;
 @property (strong, nonatomic) TileView *v1;
 @property (strong, nonatomic) TileView *v2;
