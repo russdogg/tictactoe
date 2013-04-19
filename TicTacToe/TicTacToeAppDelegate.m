@@ -26,7 +26,7 @@
     CGRect titleFrame = CGRectMake(0, 30, 320, 50);
     
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
-    titleLabel.text = @"Player X's turn!";
+    titleLabel.text = @"Player x: Go!";
     titleLabel.textColor = [UIColor redColor];
     titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -286,11 +286,11 @@
         
         if (whoseTurn == 0)
         {
-            titleLabel.text = @"X Wins!";
+            titleLabel.text = @"x wins!";
         }
         else
         {
-            titleLabel.text = @"O Wins!";
+            titleLabel.text = @"a wins!";
         }
         
         
@@ -376,11 +376,11 @@
 {
     if (whoseTurn == 0)
     {
-        titleLabel.text = @"Player X's Turn!";
+        titleLabel.text = @"Player x: Go!";
     }
     else
     {
-        titleLabel.text = @"Player O's Turn!";
+        titleLabel.text = @"Player a: Go!";
     }
     tileChosen = NO;
     [UIView animateWithDuration:0.35
@@ -390,7 +390,7 @@
 -(void)resetGame
 {
     NSLog(@"RESET THE GAME!");
-    titleLabel.text = @"Player X's Turn!";
+    titleLabel.text = @"Player x: Start!";
     currRound = 0;
     whoseTurn = 0;
     tileChosen = NO;
