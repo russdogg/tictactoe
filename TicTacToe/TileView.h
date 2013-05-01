@@ -29,6 +29,9 @@
 @property (nonatomic, assign) int id;
 @property (nonatomic, assign) int whoseTurn;
 @property (nonatomic, assign) BOOL tileLocked;
+@property (strong, nonatomic) UIImageView *eImageView;
+@property (strong, nonatomic) UIImageView *aImageView;
+
 
 -(void)resetView;
 -(void)updateView;

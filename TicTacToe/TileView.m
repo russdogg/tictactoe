@@ -16,6 +16,8 @@
 @synthesize tileLocked;
 @synthesize whoseTurn;
 @synthesize delegate;
+@synthesize eImageView;
+@synthesize aImageView;
 
 -(void)updateView
 {
@@ -24,7 +26,7 @@
     {
         tag = 1;
 
-        [self setNeedsDisplay];
+        [self setGraphics];
         int idToPassBack = id;
         [self.delegate didSelectTile:idToPassBack];
     }
@@ -35,8 +37,28 @@
     if(tileLocked == NO)
     {
         tag = -1;
-        [self setNeedsDisplay];
+        aImageView.hidden = YES;
+        eImageView.hidden = YES;
     }
+}
+
+-(void)addTileImages
+{
+    //ADD X IMAGE
+    UIImage * eImage;
+    eImage = [UIImage imageNamed: @"tile-e1.png"];
+    eImageView = [[UIImageView alloc] initWithImage: eImage];
+    [self addSubview:eImageView];
+    
+    //ADD A IMAGE
+    UIImage * aImage;
+    aImage = [UIImage imageNamed: @"tile-a.png"];
+    aImageView = [[UIImageView alloc] initWithImage: aImage];
+    [self addSubview:aImageView];
+    
+    aImageView.hidden = YES;
+    eImageView.hidden = YES;
+    
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -48,60 +70,42 @@
         tileLocked = NO;
         whoseTurn = 0;
         
+        [self addTileImages];
+        
+        //CREATE MAIN BUTTON
+        CGRect bFrame = CGRectMake(0.0f, 0.0f, 75.0f, 75.0f);
+        UIButton *mainButton = [[UIButton alloc] initWithFrame:bFrame];
+        
+        
+        [mainButton addTarget:self action:@selector(updateView) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:mainButton];     
     }
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
+
+- (void)setGraphics
 {
-  // NSLog(@"trace TILE ID: %i", id);
-    
-    //PICK UP THE PEN
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    //SET PEN WIDTH
-    CGContextSetLineWidth(context, 22);
-    
-    //SET PEN COLOR
-    CGContextSetRGBStrokeColor(context, 50.0, 2.0, 9.0, 1.0);
-    
-    //GET BOUNDS
-    CGRect b = [self bounds];
-    
-    CGRect e = CGRectMake(2.0, 2.0, 78.0, 78.0);
-    
+      
     if (tag == 1)
     {
+        aImageView.hidden = YES;
+        eImageView.hidden = YES;
+        
         if([self whoseTurn] == 0)
         {
-            //DRAW "X"
-            NSLog(@"Draw X");
-            CGContextMoveToPoint(context, b.origin.x, b.origin.y);
-            CGContextAddLineToPoint(context, b.size.width, b.size.height);
-        
-            CGContextMoveToPoint(context, b.size.width, b.origin.y);
-            CGContextAddLineToPoint(context, b.origin.x, b.size.height);
-            
+            //DRAW "A"
+            NSLog(@"Draw A");
+            aImageView.hidden = NO;
         }
         
         else if([self whoseTurn] == 1)
         {
-            //DRAW "O"
-            NSLog(@"Draw O");
-            CGContextStrokeEllipseInRect(context, e);
-           
+            NSLog(@"Draw E");
+            eImageView.hidden = NO;
         }
-       //FINISH STOKING THE PATH
-        CGContextStrokePath(context);
     }
-    
-    //CREATE MAIN BUTTON
-    CGRect bFrame = CGRectMake(0.0f, 0.0f, 75.0f, 75.0f);
-    UIButton *mainButton = [[UIButton alloc] initWithFrame:bFrame];
-    
-    [mainButton addTarget:self action:@selector(updateView) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self addSubview:mainButton];
 }
 
 @end

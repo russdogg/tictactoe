@@ -5,6 +5,16 @@
 //  Created by Russ D on 3/21/13.
 //  Copyright (c) 2013 RussDesigns. All rights reserved.
 //
+
+//MACROS
+#define IS_IPHONE5 (([[UIScreen mainScreen]bounds].size.height-568)?NO:YES)
+
+#define UIColorFromRGB(rgbValue) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+
 #import "TileView.h"
 #import "TicTacToeAppDelegate.h"
 
@@ -15,20 +25,28 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    UIImage * defaultImage = [UIImage imageNamed: @"Default.png"];
+    UIImage * defaultImage;
+    if(IS_IPHONE5)
+    {
+        defaultImage = [UIImage imageNamed: @"Default-568h.png"];
+    }
+    else
+    {
+        defaultImage = [UIImage imageNamed: @"Default.png"];
+    }
+    
     defaultImageView = [[UIImageView alloc] initWithImage: defaultImage];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
     [self.window addSubview:defaultImageView];
     
     //TITLE FRAME
-    CGRect titleFrame = CGRectMake(0, 30, 320, 50);
-    
+    CGRect titleFrame = CGRectMake(0, 12, 320, 98);
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
-    titleLabel.text = @"Player x: Go!";
-    titleLabel.textColor = [UIColor redColor];
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:45.0];
+    titleLabel.text = @"START";
+    titleLabel.lineBreakMode = NSLineBreakByClipping;
+    titleLabel.textColor = UIColorFromRGB(0xD20C2A);
+    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:101.0];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
     //DRAW VIEW TILES
@@ -54,15 +72,15 @@
     v7 = [[TileView alloc] initWithFrame:frame07];
     v8 = [[TileView alloc] initWithFrame:frame08];
         
-    [v0 setBackgroundColor: [UIColor redColor]];
-    [v1 setBackgroundColor: [UIColor redColor]];
-    [v2 setBackgroundColor: [UIColor redColor]];
-    [v3 setBackgroundColor: [UIColor redColor]];
-    [v4 setBackgroundColor: [UIColor redColor]];
-    [v5 setBackgroundColor: [UIColor redColor]];
-    [v6 setBackgroundColor: [UIColor redColor]];
-    [v7 setBackgroundColor: [UIColor redColor]];
-    [v8 setBackgroundColor: [UIColor redColor]];
+    [v0 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v1 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v2 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v3 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v4 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v5 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v6 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v7 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
+    [v8 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
     
     [v0 setTag:-1];
     [v1 setTag:-1];
@@ -112,34 +130,32 @@
     
     choiceArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1], nil];
     
-    
-    
-    //choiceArray = [[NSMutableArray alloc] initWithCapacity:9] ;
-    
     previousTile = -1;
     whoseTurn = 0;
     currRound = 0;
     tileChosen = NO;
     isWinner = NO;
     
+    /*
     //CONFIRM BUTTON
     CGRect confirmFrame = CGRectMake(20.0f, 420.0f, 120.0f, 40.0f);
     UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmFrame];
-    [confirmButton setBackgroundColor:[UIColor redColor]];
+    [confirmButton setBackgroundColor:UIColorFromRGB(0xD20C2A)];
     [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
     [confirmButton setTitle:@"Confirming" forState:UIControlStateHighlighted];
     confirmButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
     [confirmButton addTarget:self action:@selector(confirmChoice) forControlEvents:UIControlEventTouchUpInside];
     
     [self.window addSubview:confirmButton];
+     */
     
     
     //RESET BUTTON
-    CGRect resetFrame = CGRectMake(180.0f, 420.0f, 120.0f, 40.0f);
+    CGRect resetFrame = CGRectMake(100.0f, 430.0f, 120.0f, 40.0f);
     UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
-    [resetButton setBackgroundColor:[UIColor redColor]];
-    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
-    [resetButton setTitle:@"Reseting" forState:UIControlStateHighlighted];
+    [resetButton setBackgroundColor:UIColorFromRGB(0xD20C2A)];
+    [resetButton setTitle:@"START OVER" forState:UIControlStateNormal];
+    [resetButton setTitle:@"" forState:UIControlStateHighlighted];
     resetButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
     [resetButton addTarget:self action:@selector(resetGame) forControlEvents:UIControlEventTouchUpInside];
     
@@ -150,9 +166,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    
+    //HIDE PLACEHOLDER IMAGE AFTER DELAY
     [self.window addSubview:defaultImageView];
-    
     [self performSelector:@selector(hideImage) withObject:nil afterDelay:2.0];
     
     return YES;
@@ -170,6 +185,10 @@
     int count;
     count = 9;
     
+    int w1 = -1;
+    int w2 = -1;
+    int w3 = -1;
+    
     int topRowFirstInt = [[choiceArray objectAtIndex:0] integerValue];
     int topRowMiddleInt = [[choiceArray objectAtIndex:1] integerValue];
     int topRowLastInt = [[choiceArray objectAtIndex:2] integerValue];
@@ -186,6 +205,9 @@
         {
             NSLog(@"### WINNER ### - TOP ROW IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 0;
+            w2 = 1;
+            w3 = 2;
         }
     }
     
@@ -199,6 +221,9 @@
         {
             NSLog(@"### WINNER ### - MIDDLE ROW IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 3;
+            w2 = 4;
+            w3 = 5;
         }
     }
     
@@ -212,6 +237,9 @@
         {
             NSLog(@"### WINNER ### - BOTTOM ROW IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 6;
+            w2 = 7;
+            w3 = 8;
         }
     }
     
@@ -225,6 +253,9 @@
         {
             NSLog(@"### WINNER ### - FIRST VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 0;
+            w2 = 3;
+            w3 = 6;
         }
     }
     
@@ -238,6 +269,9 @@
         {
             NSLog(@"### WINNER ### - SECOND VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 1;
+            w2 = 4;
+            w3 = 7;
         }
     }
     
@@ -251,6 +285,9 @@
         {
             NSLog(@"### WINNER ### - THIRD VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 2;
+            w2 = 5;
+            w3 = 8;
         }
     }
     
@@ -264,6 +301,9 @@
         {
             NSLog(@"### WINNER ### - FIRST DIAGONAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 0;
+            w2 = 4;
+            w3 = 8;
         }
     }
     
@@ -277,35 +317,47 @@
         {
             NSLog(@"### WINNER ### - BOTTOM DIAGONAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
+            w1 = 6;
+            w2 = 4;
+            w3 = 2;
         }
     }
     
     if (isWinner)
     {
-        NSLog(@"WINNER!!");
-        
+        NSLog(@"WINNER!");
+        titleLabel.text = @"WIN";
+        //DETERMINE WHO WON
+        /*
         if (whoseTurn == 0)
-        {
-            titleLabel.text = @"x wins!";
-        }
-        else
         {
             titleLabel.text = @"a wins!";
         }
+        else
+        {
+            titleLabel.text = @"x wins!";
+        }
+        */
         
-        
-        
+        //LOCK ALL TILES
         for (i = 0; i < count; i++)
         {
             [[tileArray objectAtIndex:i] setTileLocked:YES];
+            
+            if(i != w1 && i != w2 && i != w3)
+            {
+                //CHANGE COLOR FOR WINNERS
+                [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0x575757)];
+            }
         }
-       
     }
     else
     {
+        //ELSE NOBODY WON...
         if(currRound == 8)
         {
-            titleLabel.text =  @"Tied Game :(";
+            titleLabel.text =  @"TIED";
+            titleLabel.textColor = UIColorFromRGB(0x575757);
             for (i = 0; i < count; i++)
             {
                 [[tileArray objectAtIndex:i] setTileLocked:YES];
@@ -341,7 +393,6 @@
     if (tempView.tag!= -1)
     {
         [[tileArray objectAtIndex:currentTile] setTileLocked:YES];
-        
     }
     
     int i;
@@ -363,10 +414,20 @@
 -(void)confirmChoice
 {
     if (tileChosen)
-    {
-        NSLog(@"Pushing: %i to this spot in array index: %i", whoseTurn, currentTile);
+    {        
+        if(whoseTurn ==0)
+        {
+            // setBackgroundColor Dark Red
+            [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0xffc604)];
+            
+        }
+        else
+        {
+            // setBackgroundColor Light Red
+            [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0x00d0ff)];
+        }
         
-        [choiceArray replaceObjectAtIndex:currentTile withObject:[NSNumber numberWithInt:whoseTurn] ];
+        [choiceArray replaceObjectAtIndex:currentTile withObject:[NSNumber numberWithInt:whoseTurn]];
         
         [self checkScore];
     }
@@ -376,11 +437,13 @@
 {
     if (whoseTurn == 0)
     {
-        titleLabel.text = @"Player x: Go!";
+        titleLabel.text = @"GO";
+        titleLabel.textColor = UIColorFromRGB(0xffc604);
     }
     else
     {
-        titleLabel.text = @"Player a: Go!";
+        titleLabel.text = @"GO";
+        titleLabel.textColor = UIColorFromRGB(0x00d0ff);
     }
     tileChosen = NO;
     [UIView animateWithDuration:0.35
@@ -389,8 +452,9 @@
 
 -(void)resetGame
 {
-    NSLog(@"RESET THE GAME!");
-    titleLabel.text = @"Player x: Start!";
+    NSLog(@"RESET THE GAME");
+    titleLabel.text = @"START";
+    titleLabel.textColor = UIColorFromRGB(0xD20C2A);
     currRound = 0;
     whoseTurn = 0;
     tileChosen = NO;
@@ -404,13 +468,95 @@
     {
         [[tileArray objectAtIndex:i] setTileLocked:NO];
         [[tileArray objectAtIndex:i] setWhoseTurn:whoseTurn];
-        [[tileArray objectAtIndex:i] resetView];
+        //[[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0xD20C2A)];
+        //[[tileArray objectAtIndex:i] resetView];
         
         [choiceArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:-1]];
-    }    
+        
+        [UIView animateWithDuration:0.75f
+                         animations:^{
+                             [[tileArray objectAtIndex:i] setAlpha:0.0f];
+                             [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
+                         }
+                         completion:^(BOOL finished)
+                        {
+                            [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0xD20C2A)];
+                            [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                            if (i == 8)
+                            {
+                                [self setupGame];
+                            }
+                        }
+        ];
+    }
 }
 
-
+-(void)setupGame
+{
+    int i;
+    int count;
+    count = 9;
+    
+    for (i = 0; i < count; i++)
+    {
+        [[tileArray objectAtIndex:i] resetView];
+        [UIView animateWithDuration:0.75f
+                     animations:^{
+                         
+                         switch (i)
+                         {
+                             case 0:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 140)];
+                                 break;
+                                 
+                             case 1:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 140)];
+                                 break;
+                                 
+                             case 2:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 140)];
+                                 break;
+                                 
+                             case 3:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 240)];
+                                 break;
+                                 
+                             case 4:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
+                                 break;
+                                 
+                             case 5:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 240)];
+                                 break;
+                                 
+                             case 6:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 340)];
+                                 break;
+                                 
+                             case 7:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 340)];
+                                 break;
+                                 
+                             case 8:
+                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 340)];
+                                 break;
+                                 
+                             default:
+                                 
+                                 break;
+                         }
+                     }];
+    }
+}
 - (void)didSelectTile:(int)tile
 {
     tileChosen = YES;
@@ -428,5 +574,22 @@
     }
     //UPDATE PREVIOUS TILE INT FOR NEXT ROUND
     previousTile = currentTile;
+    
+    if (tileChosen)
+    {
+        if(whoseTurn ==0)
+        {
+            // setBackgroundColor Dark Red
+            [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0xffc604)];
+        }
+        else
+        {
+            // setBackgroundColor Light Red
+            [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0x00d0ff)];
+        }
+        
+        [choiceArray replaceObjectAtIndex:currentTile withObject:[NSNumber numberWithInt:whoseTurn]];
+        [self checkScore];
+    }
 }
 @end
