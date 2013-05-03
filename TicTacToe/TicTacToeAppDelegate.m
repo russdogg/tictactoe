@@ -20,7 +20,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation TicTacToeAppDelegate
 
-@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, isWinner, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView;
+@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, isWinner, currRound, currLevel, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView, resetButton, aScore, eScore;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -40,13 +40,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window addSubview:defaultImageView];
     
+    
+    
     //TITLE FRAME
-    CGRect titleFrame = CGRectMake(0, 12, 320, 98);
+    CGRect titleFrame = CGRectMake(0, 8, 320, 98);
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
-    titleLabel.text = @"START";
     titleLabel.lineBreakMode = NSLineBreakByClipping;
     titleLabel.textColor = UIColorFromRGB(0xD20C2A);
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:101.0];
+    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:80.0];
+    titleLabel.text = @"ROUND 1";
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
     //DRAW VIEW TILES
@@ -123,16 +125,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self.window addSubview:v6];
     [self.window addSubview:v7];
     [self.window addSubview:v8];
-        
     
     tileArray = [[NSArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
    
-    
     choiceArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1], nil];
     
     previousTile = -1;
     whoseTurn = 0;
     currRound = 0;
+    currLevel = 1;
+    aScore = 0;
+    eScore = 0;
     tileChosen = NO;
     isWinner = NO;
     
@@ -150,16 +153,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
      */
     
     
-    //RESET BUTTON
+    //NEXT ROUND BUTTON
     CGRect resetFrame = CGRectMake(100.0f, 430.0f, 120.0f, 40.0f);
-    UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
-    [resetButton setBackgroundColor:UIColorFromRGB(0xD20C2A)];
-    [resetButton setTitle:@"START OVER" forState:UIControlStateNormal];
+    resetButton = [[UIButton alloc] initWithFrame:resetFrame];
+    [resetButton setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];
     [resetButton setTitle:@"" forState:UIControlStateHighlighted];
     resetButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
     [resetButton addTarget:self action:@selector(resetGame) forControlEvents:UIControlEventTouchUpInside];
     
     [self.window addSubview:resetButton];
+    resetButton.hidden = YES;
     
     
     // Override point for customization after application launch.
@@ -327,18 +331,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     {
         NSLog(@"WINNER!");
         titleLabel.text = @"WIN";
-        //DETERMINE WHO WON
-        /*
-        if (whoseTurn == 0)
+        if (whoseTurn ==0)
         {
-            titleLabel.text = @"a wins!";
+            aScore ++;
         }
         else
         {
-            titleLabel.text = @"x wins!";
+            eScore ++;
         }
-        */
         
+        NSLog(@"### CURRENT SCORE ### A Score: %i, E Score %i", aScore, eScore);
+        
+        resetButton.alpha = 0;
+        resetButton.hidden = NO;
+        [UIView animateWithDuration:0.35
+                         animations:^{resetButton.alpha = 1.0;}];
         //LOCK ALL TILES
         for (i = 0; i < count; i++)
         {
@@ -347,7 +354,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             if(i != w1 && i != w2 && i != w3)
             {
                 //CHANGE COLOR FOR WINNERS
-                [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0x575757)];
+                [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0xcccccc)];
             }
         }
     }
@@ -357,10 +364,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         if(currRound == 8)
         {
             titleLabel.text =  @"TIED";
-            titleLabel.textColor = UIColorFromRGB(0x575757);
+            titleLabel.textColor = UIColorFromRGB(0xcccccc);
+            
+            resetButton.alpha = 0;
+            resetButton.hidden = NO;
+            [UIView animateWithDuration:0.35
+                             animations:^{resetButton.alpha = 1.0;}];
+            
             for (i = 0; i < count; i++)
             {
                 [[tileArray objectAtIndex:i] setTileLocked:YES];
+                [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0xcccccc)];
             }
         }
         else
@@ -435,14 +449,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 -(void)updateAfterRound
 {
+    titleLabel.text = @"GO";
     if (whoseTurn == 0)
     {
-        titleLabel.text = @"GO";
         titleLabel.textColor = UIColorFromRGB(0xffc604);
     }
     else
     {
-        titleLabel.text = @"GO";
         titleLabel.textColor = UIColorFromRGB(0x00d0ff);
     }
     tileChosen = NO;
@@ -453,7 +466,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 -(void)resetGame
 {
     NSLog(@"RESET THE GAME");
-    titleLabel.text = @"START";
+    resetButton.hidden = YES;
+    if(currRound <9)
+    {
+        currLevel ++;
+    }
+    else
+    {
+        currLevel = 1;
+    }
+    [titleLabel setText:[NSString stringWithFormat:@"ROUND %i", currLevel]];
     titleLabel.textColor = UIColorFromRGB(0xD20C2A);
     currRound = 0;
     whoseTurn = 0;

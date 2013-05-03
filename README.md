@@ -23,8 +23,11 @@ Remaining To Do Items:
 + √ **Score logic:** add logic for tied game
 + √ **Score logic:** add logic for a winning game, identify winner
 + √ Stop game on win, maybe hide board or fade out or something
-+ Finish Game screen?
-+ Hide Confirm button on game end? or fade out and remove click event
-+ Highlighting button of selected tiles
-+ √ Splash screen - still needs work on iphone 5
-+ √ home screen icons
++ √ Hide Confirm button on game end? or fade out and remove click event
++ √ Highlighting button of selected tiles
++ √ Splash screen - √ still needs work on iphone 5
++ √ Home screen icons 
++ Calculate round scoring
++ Display score either at all times or at end of rounds
++ Make new reset button
++ Submit Version 1.0 to app store!

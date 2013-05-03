@@ -18,6 +18,9 @@
 @property int previousTile;
 @property int whoseTurn;
 @property int currRound;
+@property int currLevel;
+@property int aScore;
+@property int eScore;
 @property BOOL tileChosen;
 @property BOOL isWinner;
 
@@ -32,6 +35,7 @@
 @property (strong, nonatomic) TileView *v6;
 @property (strong, nonatomic) TileView *v7;
 @property (strong, nonatomic) TileView *v8;
+@property (strong, nonatomic) UIButton *resetButton;
 
 @property (strong, nonatomic) UIImageView *defaultImageView;
 
