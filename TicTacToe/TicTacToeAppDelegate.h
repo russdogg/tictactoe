@@ -10,7 +10,7 @@
 #import "TileView.h"
 
 
-@interface TicTacToeAppDelegate : UIResponder <UIApplicationDelegate, MyViewDelegate>
+@interface TicTacToeAppDelegate : UIResponder <UIApplicationDelegate, TileViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UILabel *titleLabel;

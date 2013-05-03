@@ -14,7 +14,7 @@ colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-
+//IMPORTS
 #import "TileView.h"
 #import "TicTacToeAppDelegate.h"
 
@@ -42,14 +42,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
     
-    //TITLE FRAME
+    //TITLE LABEL
     CGRect titleFrame = CGRectMake(0, 8, 320, 98);
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
     titleLabel.lineBreakMode = NSLineBreakByClipping;
     titleLabel.textColor = UIColorFromRGB(0xD20C2A);
     titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:80.0];
+    titleLabel.alpha = 0;
     titleLabel.text = @"ROUND 1";
     titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [UIView animateWithDuration:0.5
+                          delay: 2.0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{titleLabel.alpha = 1.0;}
+                     completion:nil
+                    ];
     
     //DRAW VIEW TILES
     CGRect frame00 = CGRectMake(20, 100, 80, 80);
@@ -200,14 +208,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     int bottomRowFirstInt = [[choiceArray objectAtIndex:6] integerValue];
     
     //TOP ROW HORIZONTAL CHECK
-    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:0] integerValue], [[choiceArray objectAtIndex:1] integerValue], [[choiceArray objectAtIndex:2] integerValue]);
     
     if ([[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:1]]
         && [[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:2]])
     {
         if (topRowFirstInt != -1)
         {
-            NSLog(@"### WINNER ### - TOP ROW IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 0;
             w2 = 1;
@@ -216,14 +222,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //MIDDLE ROW HORIZONTAL CHECK
-    NSLog(@"MIDDLE ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:3] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:5] integerValue]);
     
     if ([[choiceArray objectAtIndex:3] isEqual: [choiceArray objectAtIndex:4]]
         && [[choiceArray objectAtIndex:3] isEqual: [choiceArray objectAtIndex:5]])
     {
         if (middleRowFirstInt != -1)
         {
-            NSLog(@"### WINNER ### - MIDDLE ROW IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 3;
             w2 = 4;
@@ -232,14 +236,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //BOTTOM ROW HORIZONTAL CHECK
-    NSLog(@"BOTTOM ROW CHECK: : %i, %i, %i", [[choiceArray objectAtIndex:6] integerValue], [[choiceArray objectAtIndex:7] integerValue], [[choiceArray objectAtIndex:8] integerValue]);
     
     if([[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:7]]
        && [[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:8]])
     {
         if (bottomRowFirstInt != -1)
         {
-            NSLog(@"### WINNER ### - BOTTOM ROW IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 6;
             w2 = 7;
@@ -248,14 +250,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //FIRST COLUMN VERTICAL CHECK
-    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:0] integerValue], [[choiceArray objectAtIndex:3] integerValue], [[choiceArray objectAtIndex:6] integerValue]);
     
     if ([[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:3]]
         && [[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:6]])
     {
         if (topRowFirstInt != -1)
         {
-            NSLog(@"### WINNER ### - FIRST VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 0;
             w2 = 3;
@@ -264,14 +264,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //SECOND COLUMN VERTICAL CHECK
-    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:1] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:7] integerValue]);
     
     if ([[choiceArray objectAtIndex:1] isEqual: [choiceArray objectAtIndex:4]]
         && [[choiceArray objectAtIndex:1] isEqual: [choiceArray objectAtIndex:7]])
     {
         if (topRowMiddleInt != -1)
         {
-            NSLog(@"### WINNER ### - SECOND VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 1;
             w2 = 4;
@@ -280,14 +278,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //THIRD COLUMN VERTICAL CHECK
-    NSLog(@"TOP ROW CHECK: %i, %i, %i", [[choiceArray objectAtIndex:2] integerValue], [[choiceArray objectAtIndex:5] integerValue], [[choiceArray objectAtIndex:8] integerValue]);
     
     if ([[choiceArray objectAtIndex:2] isEqual: [choiceArray objectAtIndex:5]]
         && [[choiceArray objectAtIndex:2] isEqual: [choiceArray objectAtIndex:8]])
     {
         if (topRowLastInt != -1)
         {
-            NSLog(@"### WINNER ### - THIRD VERTICAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 2;
             w2 = 5;
@@ -296,14 +292,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //TOP CORNER DIAGONAL CHECK
-    NSLog(@"TOP DIAGONAL CHECK: %i, %i, %i", [[choiceArray objectAtIndex:0] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:8] integerValue]);
     
     if ([[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:4]]
         && [[choiceArray objectAtIndex:0] isEqual: [choiceArray objectAtIndex:8]])
     {
         if (topRowFirstInt != -1)
         {
-            NSLog(@"### WINNER ### - FIRST DIAGONAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 0;
             w2 = 4;
@@ -312,14 +306,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     
     //BOTTOM CORNER DIAGONAL CHECK
-    NSLog(@"BOTTOM DIAGONAL CHECK: %i, %i, %i", [[choiceArray objectAtIndex:6] integerValue], [[choiceArray objectAtIndex:4] integerValue], [[choiceArray objectAtIndex:2] integerValue]);
     
     if ([[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:4]]
         && [[choiceArray objectAtIndex:6] isEqual: [choiceArray objectAtIndex:2]])
     {
         if (bottomRowFirstInt != -1)
         {
-            NSLog(@"### WINNER ### - BOTTOM DIAGONAL COLUMN IS ALL THE SAME and NOT -1.");
             isWinner = YES;
             w1 = 6;
             w2 = 4;
@@ -329,7 +321,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     if (isWinner)
     {
-        NSLog(@"WINNER!");
+        titleLabel.alpha = 0;
+        [UIView animateWithDuration:0.75
+                         animations:^{titleLabel.alpha = 1.0;}];
+        
         titleLabel.text = @"WIN";
         if (whoseTurn ==0)
         {
@@ -340,7 +335,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             eScore ++;
         }
         
-        NSLog(@"### CURRENT SCORE ### A Score: %i, E Score %i", aScore, eScore);
+        NSLog(@"WINNER! Current score: Team A: %i Team E: %i", aScore, eScore);
         
         resetButton.alpha = 0;
         resetButton.hidden = NO;
@@ -363,6 +358,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         //ELSE NOBODY WON...
         if(currRound == 8)
         {
+            titleLabel.alpha = 0;
+            [UIView animateWithDuration:0.75
+                             animations:^{titleLabel.alpha = 1.0;}];
             titleLabel.text =  @"TIED";
             titleLabel.textColor = UIColorFromRGB(0xcccccc);
             
@@ -425,19 +423,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                      completion:^(BOOL finished){ [self updateAfterRound]; }];
 }
 
+
+
+
+
+
 -(void)confirmChoice
 {
     if (tileChosen)
     {        
         if(whoseTurn ==0)
         {
-            // setBackgroundColor Dark Red
             [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0xffc604)];
             
         }
         else
         {
-            // setBackgroundColor Light Red
             [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0x00d0ff)];
         }
         
@@ -475,6 +476,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     {
         currLevel = 1;
     }
+    titleLabel.alpha = 0.0;
+    [UIView animateWithDuration:0.75
+                     animations:^{titleLabel.alpha = 1.0;}];
+    
     [titleLabel setText:[NSString stringWithFormat:@"ROUND %i", currLevel]];
     titleLabel.textColor = UIColorFromRGB(0xD20C2A);
     currRound = 0;
@@ -496,6 +501,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [choiceArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:-1]];
         
         [UIView animateWithDuration:0.75f
+                              delay:0.0
+                        options: UIViewAnimationOptionCurveEaseIn
                          animations:^{
                              [[tileArray objectAtIndex:i] setAlpha:0.0f];
                              [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
@@ -513,6 +520,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
 }
 
+
+
+
 -(void)setupGame
 {
     int i;
@@ -522,53 +532,48 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     for (i = 0; i < count; i++)
     {
         [[tileArray objectAtIndex:i] resetView];
+        
         [UIView animateWithDuration:0.75f
+                        
                      animations:^{
+                         [[tileArray objectAtIndex:i] setAlpha:1.0f];
                          
                          switch (i)
                          {
                              case 0:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+                                 
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 140)];
                                  break;
                                  
                              case 1:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 140)];
                                  break;
                                  
                              case 2:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 140)];
                                  break;
                                  
                              case 3:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 240)];
                                  break;
                                  
                              case 4:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
                                  break;
                                  
                              case 5:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 240)];
                                  break;
                                  
                              case 6:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 340)];
                                  break;
                                  
                              case 7:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 340)];
                                  break;
                                  
                              case 8:
-                                 [[tileArray objectAtIndex:i] setAlpha:1.0f];
                                  [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 340)];
                                  break;
                                  
@@ -601,12 +606,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     {
         if(whoseTurn ==0)
         {
-            // setBackgroundColor Dark Red
             [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0xffc604)];
         }
         else
         {
-            // setBackgroundColor Light Red
             [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0x00d0ff)];
         }
         

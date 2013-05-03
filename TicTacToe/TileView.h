@@ -10,7 +10,7 @@
 
 @class TileView;
 
-@protocol MyViewDelegate <NSObject>
+@protocol TileViewDelegate <NSObject>
 
 - (void)didSelectTile:(int)tile ;
 
@@ -23,7 +23,7 @@
     int whoseTurn;
     BOOL tileLocked;
 }
-@property (nonatomic, weak) id <MyViewDelegate> delegate;
+@property (nonatomic, weak) id <TileViewDelegate> delegate;
 
 @property (nonatomic, assign) int tag;
 @property (nonatomic, assign) int id;
