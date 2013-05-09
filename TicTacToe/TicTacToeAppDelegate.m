@@ -20,7 +20,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation TicTacToeAppDelegate
 
-@synthesize titleLabel, tileChosen, currentTile, previousTile, whoseTurn, isWinner, currRound, currLevel, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView, resetButton, aScore, eScore;
+@synthesize titleLabel, aScoreLabel, eScoreLabel, tileChosen, currentTile, previousTile, whoseTurn, isWinner, turnCount, currRound, choiceArray, tileArray, v0, v1, v2, v3, v4, v5, v6, v7, v8, defaultImageView, resetButton, aScore, eScore, maxRounds;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -52,25 +52,60 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     titleLabel.text = @"ROUND 1";
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
+    //A SCORE LABEL
+    CGRect aScoreFrame = CGRectMake(20, 405, 50, 50);
+    aScoreLabel = [[UILabel alloc] initWithFrame:aScoreFrame];
+    aScoreLabel.lineBreakMode = NSLineBreakByClipping;
+    aScoreLabel.textColor = UIColorFromRGB(0xffc604);
+    aScoreLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:40.0];
+    aScoreLabel.alpha = 1;
+    aScoreLabel.text = @"0";
+    aScoreLabel.textAlignment = NSTextAlignmentLeft;
+    
+    //E SCORE LABEL
+    CGRect eScoreFrame = CGRectMake(260, 405, 50, 50);
+    eScoreLabel = [[UILabel alloc] initWithFrame:eScoreFrame];
+    eScoreLabel.lineBreakMode = NSLineBreakByClipping;
+    eScoreLabel.textColor = UIColorFromRGB(0x00d0ff);
+    eScoreLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:40.0];
+    eScoreLabel.alpha = 1;
+    eScoreLabel.text = @"0";
+    eScoreLabel.textAlignment = NSTextAlignmentRight;
+    
+    
+    /*
     [UIView animateWithDuration:0.5
                           delay: 2.0
                         options: UIViewAnimationOptionCurveEaseIn
                      animations:^{titleLabel.alpha = 1.0;}
                      completion:nil
                     ];
+     */
     
     //DRAW VIEW TILES
-    CGRect frame00 = CGRectMake(20, 100, 80, 80);
-    CGRect frame01 = CGRectMake(120, 100, 80, 80);
-    CGRect frame02 = CGRectMake(220, 100, 80, 80);
+    //CGRect frame00 = CGRectMake(20, 100, 80, 80);
+    //CGRect frame01 = CGRectMake(120, 100, 80, 80);
+    //CGRect frame02 = CGRectMake(220, 100, 80, 80);
     
-    CGRect frame03 = CGRectMake(20, 200, 80, 80);
+   // CGRect frame03 = CGRectMake(20, 200, 80, 80);
+   // CGRect frame04 = CGRectMake(120, 200, 80, 80);
+   // CGRect frame05 = CGRectMake(220, 200, 80, 80);
+    
+   // CGRect frame06 = CGRectMake(20, 300, 80, 80);
+   // CGRect frame07 = CGRectMake(120, 300, 80, 80);
+   // CGRect frame08 = CGRectMake(220, 300, 80, 80);
+    
+    CGRect frame00 = CGRectMake(120, 200, 80, 80);
+    CGRect frame01 = CGRectMake(120, 200, 80, 80);
+    CGRect frame02 = CGRectMake(120, 200, 80, 80);
+    
+    CGRect frame03 = CGRectMake(120, 200, 80, 80);
     CGRect frame04 = CGRectMake(120, 200, 80, 80);
-    CGRect frame05 = CGRectMake(220, 200, 80, 80);
+    CGRect frame05 = CGRectMake(120, 200, 80, 80);
     
-    CGRect frame06 = CGRectMake(20, 300, 80, 80);
-    CGRect frame07 = CGRectMake(120, 300, 80, 80);
-    CGRect frame08 = CGRectMake(220, 300, 80, 80);
+    CGRect frame06 = CGRectMake(120, 200, 80, 80);
+    CGRect frame07 = CGRectMake(120, 200, 80, 80);
+    CGRect frame08 = CGRectMake(120, 200, 80, 80);
     
     v0 = [[TileView alloc] initWithFrame:frame00];
     v1 = [[TileView alloc] initWithFrame:frame01];
@@ -123,6 +158,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     v8.delegate = self;
     
     [self.window addSubview:titleLabel];
+    [self.window addSubview:aScoreLabel];
+    [self.window addSubview:eScoreLabel];
     
     [self.window addSubview:v0];
     [self.window addSubview:v1];
@@ -140,10 +177,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     previousTile = -1;
     whoseTurn = 0;
-    currRound = 0;
-    currLevel = 1;
+    turnCount = 0;
+    currRound = 1;
     aScore = 0;
     eScore = 0;
+    maxRounds = 3;
     tileChosen = NO;
     isWinner = NO;
     
@@ -162,7 +200,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
     //NEXT ROUND BUTTON
-    CGRect resetFrame = CGRectMake(100.0f, 430.0f, 120.0f, 40.0f);
+    CGRect resetFrame = CGRectMake(100.0f, 410.0f, 120.0f, 40.0f);
     resetButton = [[UIButton alloc] initWithFrame:resetFrame];
     [resetButton setBackgroundColor:UIColorFromRGB(0xcccccc)];
     [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];
@@ -188,11 +226,20 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 -(void)hideImage
 {
     defaultImageView.hidden = YES;
+    [self setupGame];
+    [UIView animateWithDuration:0.5
+                          delay: 0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{titleLabel.alpha = 1.0;}
+                     completion:nil
+     ];
+    
+
 }
 
 -(void)checkScore
 {
-    NSLog(@"SCORE CHECK: currRound: %i, whoseTurn: %i, currentTile: %i", currRound, whoseTurn, currentTile);
+    NSLog(@"SCORE CHECK: turnCount: %i, whoseTurn: %i, currentTile: %i", turnCount, whoseTurn, currentTile);
     int i;
     int count;
     count = 9;
@@ -336,7 +383,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }
         
         NSLog(@"WINNER! Current score: Team A: %i Team E: %i", aScore, eScore);
+        [self updateScore];
+        if(currRound == maxRounds)
+        {
+            [resetButton setTitle:@"START OVER" forState:UIControlStateNormal];
+        }
         
+        else
+        {
+            [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];
+        }
         resetButton.alpha = 0;
         resetButton.hidden = NO;
         [UIView animateWithDuration:0.35
@@ -356,13 +412,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     else
     {
         //ELSE NOBODY WON...
-        if(currRound == 8)
+        if(turnCount == 8)
         {
             titleLabel.alpha = 0;
             [UIView animateWithDuration:0.75
                              animations:^{titleLabel.alpha = 1.0;}];
             titleLabel.text =  @"TIED";
             titleLabel.textColor = UIColorFromRGB(0xcccccc);
+            
+            if(currRound == maxRounds)
+            {
+                [resetButton setTitle:@"START OVER" forState:UIControlStateNormal];
+            }
+            
+            else
+            {
+                [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];   
+            }
             
             resetButton.alpha = 0;
             resetButton.hidden = NO;
@@ -377,19 +443,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }
         else
         {
-         [self continueRound];   
+         [self continueCurrentRound];   
         }
     }
     
     
 }
 
--(void)continueRound
+-(void)continueCurrentRound
 {
-    //ADVANCE ROUND COUNT
-    //NSLog(@"CONFIRMED! currRound: %i, whoseTurn: %i", currRound, whoseTurn);
+    //ADVANCE TURN COUNT
+    //NSLog(@"CONFIRMED! turnCount: %i, whoseTurn: %i", currRound, whoseTurn);
     
-    currRound ++;
+    turnCount ++;
     
     if (whoseTurn == 0)
     {
@@ -424,7 +490,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 
-
+-(void)updateScore
+{
+    [aScoreLabel setText:[NSString stringWithFormat:@"%i", aScore]];
+    [eScoreLabel setText:[NSString stringWithFormat:@"%i", eScore]];
+}
 
 
 
@@ -450,6 +520,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 -(void)updateAfterRound
 {
+    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:80.0];
     titleLabel.text = @"GO";
     if (whoseTurn == 0)
     {
@@ -468,21 +539,34 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     NSLog(@"RESET THE GAME");
     resetButton.hidden = YES;
-    if(currRound <9)
+    if(currRound < maxRounds)
     {
-        currLevel ++;
+        currRound ++;
     }
     else
     {
-        currLevel = 1;
+        currRound = 1;
+        aScore = 0;
+        eScore = 0;
+        [self updateScore];
     }
     titleLabel.alpha = 0.0;
     [UIView animateWithDuration:0.75
                      animations:^{titleLabel.alpha = 1.0;}];
     
-    [titleLabel setText:[NSString stringWithFormat:@"ROUND %i", currLevel]];
+    if (currRound == maxRounds)
+    {
+        titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:50.0];
+        [titleLabel setText:[NSString stringWithFormat:@"FINAL ROUND"]];
+    }
+    else
+    {
+        titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:80.0];
+        [titleLabel setText:[NSString stringWithFormat:@"ROUND %i", currRound]];
+    }
+    
     titleLabel.textColor = UIColorFromRGB(0xD20C2A);
-    currRound = 0;
+    turnCount = 0;
     whoseTurn = 0;
     tileChosen = NO;
     isWinner = NO;
@@ -500,7 +584,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [choiceArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:-1]];
         
-        [UIView animateWithDuration:0.75f
+        [UIView animateWithDuration:0.5f
                               delay:0.0
                         options: UIViewAnimationOptionCurveEaseIn
                          animations:^{

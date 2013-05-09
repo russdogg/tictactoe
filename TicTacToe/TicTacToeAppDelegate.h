@@ -14,13 +14,16 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UILabel *aScoreLabel;
+@property (strong, nonatomic) UILabel *eScoreLabel;
 @property int currentTile;
 @property int previousTile;
 @property int whoseTurn;
+@property int turnCount;
 @property int currRound;
-@property int currLevel;
 @property int aScore;
 @property int eScore;
+@property int maxRounds;
 @property BOOL tileChosen;
 @property BOOL isWinner;
 
