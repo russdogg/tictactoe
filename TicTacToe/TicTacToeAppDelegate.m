@@ -43,7 +43,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
     //TITLE LABEL
-    CGRect titleFrame = CGRectMake(0, 8, 320, 98);
+    CGRect titleFrame = IS_IPHONE5 ? CGRectMake(0, 38, 320, 98) : CGRectMake(0, 8, 320, 98);
     titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
     titleLabel.lineBreakMode = NSLineBreakByClipping;
     titleLabel.textColor = UIColorFromRGB(0xD20C2A);
@@ -53,7 +53,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
     //A SCORE LABEL
-    CGRect aScoreFrame = CGRectMake(20, 405, 50, 50);
+    CGRect aScoreFrame = IS_IPHONE5 ? CGRectMake(20, 445, 50, 50) : CGRectMake(20, 405, 50, 50);
     aScoreLabel = [[UILabel alloc] initWithFrame:aScoreFrame];
     aScoreLabel.lineBreakMode = NSLineBreakByClipping;
     aScoreLabel.textColor = UIColorFromRGB(0xffc604);
@@ -63,7 +63,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     aScoreLabel.textAlignment = NSTextAlignmentLeft;
     
     //E SCORE LABEL
-    CGRect eScoreFrame = CGRectMake(260, 405, 50, 50);
+    CGRect eScoreFrame =  IS_IPHONE5 ? CGRectMake(260, 445, 50, 50) : CGRectMake(260, 405, 50, 50);
     eScoreLabel = [[UILabel alloc] initWithFrame:eScoreFrame];
     eScoreLabel.lineBreakMode = NSLineBreakByClipping;
     eScoreLabel.textColor = UIColorFromRGB(0x00d0ff);
@@ -74,12 +74,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     
     /*
-    [UIView animateWithDuration:0.5
-                          delay: 2.0
-                        options: UIViewAnimationOptionCurveEaseIn
-                     animations:^{titleLabel.alpha = 1.0;}
-                     completion:nil
-                    ];
+	 [UIView animateWithDuration:0.5
+	 delay: 2.0
+	 options: UIViewAnimationOptionCurveEaseIn
+	 animations:^{titleLabel.alpha = 1.0;}
+	 completion:nil
+	 ];
      */
     
     //DRAW VIEW TILES
@@ -87,14 +87,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //CGRect frame01 = CGRectMake(120, 100, 80, 80);
     //CGRect frame02 = CGRectMake(220, 100, 80, 80);
     
-   // CGRect frame03 = CGRectMake(20, 200, 80, 80);
-   // CGRect frame04 = CGRectMake(120, 200, 80, 80);
-   // CGRect frame05 = CGRectMake(220, 200, 80, 80);
+	// CGRect frame03 = CGRectMake(20, 200, 80, 80);
+	// CGRect frame04 = CGRectMake(120, 200, 80, 80);
+	// CGRect frame05 = CGRectMake(220, 200, 80, 80);
     
-   // CGRect frame06 = CGRectMake(20, 300, 80, 80);
-   // CGRect frame07 = CGRectMake(120, 300, 80, 80);
-   // CGRect frame08 = CGRectMake(220, 300, 80, 80);
+	// CGRect frame06 = CGRectMake(20, 300, 80, 80);
+	// CGRect frame07 = CGRectMake(120, 300, 80, 80);
+	// CGRect frame08 = CGRectMake(220, 300, 80, 80);
     
+	
+	
     CGRect frame00 = CGRectMake(120, 200, 80, 80);
     CGRect frame01 = CGRectMake(120, 200, 80, 80);
     CGRect frame02 = CGRectMake(120, 200, 80, 80);
@@ -107,6 +109,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     CGRect frame07 = CGRectMake(120, 200, 80, 80);
     CGRect frame08 = CGRectMake(120, 200, 80, 80);
     
+	
     v0 = [[TileView alloc] initWithFrame:frame00];
     v1 = [[TileView alloc] initWithFrame:frame01];
     v2 = [[TileView alloc] initWithFrame:frame02];
@@ -116,7 +119,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     v6 = [[TileView alloc] initWithFrame:frame06];
     v7 = [[TileView alloc] initWithFrame:frame07];
     v8 = [[TileView alloc] initWithFrame:frame08];
-        
+	
     [v0 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
     [v1 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
     [v2 setBackgroundColor: UIColorFromRGB(0xD20C2A)];//[UIColor redColor]];
@@ -171,8 +174,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self.window addSubview:v7];
     [self.window addSubview:v8];
     
-    tileArray = [[NSArray alloc] initWithObjects:v0,v1,v2,v3,v4,v5,v6,v7,v8, nil];
-   
+	
+	tileArray = @[v0,v1,v2,v3,v4,v5,v6,v7,v8];
+	
+	
     choiceArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1],[NSNumber numberWithInt: -1], nil];
     
     previousTile = -1;
@@ -186,21 +191,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     isWinner = NO;
     
     /*
-    //CONFIRM BUTTON
-    CGRect confirmFrame = CGRectMake(20.0f, 420.0f, 120.0f, 40.0f);
-    UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmFrame];
-    [confirmButton setBackgroundColor:UIColorFromRGB(0xD20C2A)];
-    [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
-    [confirmButton setTitle:@"Confirming" forState:UIControlStateHighlighted];
-    confirmButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
-    [confirmButton addTarget:self action:@selector(confirmChoice) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.window addSubview:confirmButton];
+	 //CONFIRM BUTTON
+	 CGRect confirmFrame = CGRectMake(20.0f, 420.0f, 120.0f, 40.0f);
+	 UIButton *confirmButton = [[UIButton alloc] initWithFrame:confirmFrame];
+	 [confirmButton setBackgroundColor:UIColorFromRGB(0xD20C2A)];
+	 [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
+	 [confirmButton setTitle:@"Confirming" forState:UIControlStateHighlighted];
+	 confirmButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:22.0];
+	 [confirmButton addTarget:self action:@selector(confirmChoice) forControlEvents:UIControlEventTouchUpInside];
+	 
+	 [self.window addSubview:confirmButton];
      */
     
     
     //NEXT ROUND BUTTON
-    CGRect resetFrame = CGRectMake(100.0f, 410.0f, 120.0f, 40.0f);
+    CGRect resetFrame = IS_IPHONE5 ? CGRectMake(100.0f, 450.0f, 120.0f, 40.0f) : CGRectMake(100.0f, 410.0f, 120.0f, 40.0f);
     resetButton = [[UIButton alloc] initWithFrame:resetFrame];
     [resetButton setBackgroundColor:UIColorFromRGB(0xcccccc)];
     [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];
@@ -223,6 +228,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return YES;
 }
 
+#pragma mark - Helpers
+
+- (TileView*) setTileFrame:(id) frame {
+	return frame = [[TileView alloc] initWithFrame:CGRectMake(120, 200, 80, 80)];
+}
+
 -(void)hideImage
 {
     defaultImageView.hidden = YES;
@@ -234,7 +245,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                      completion:nil
      ];
     
-
+	
 }
 
 -(void)checkScore
@@ -248,11 +259,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     int w2 = -1;
     int w3 = -1;
     
-    int topRowFirstInt = [[choiceArray objectAtIndex:0] integerValue];
-    int topRowMiddleInt = [[choiceArray objectAtIndex:1] integerValue];
-    int topRowLastInt = [[choiceArray objectAtIndex:2] integerValue];
-    int middleRowFirstInt = [[choiceArray objectAtIndex:3] integerValue];
-    int bottomRowFirstInt = [[choiceArray objectAtIndex:6] integerValue];
+    NSInteger topRowFirstInt = [[choiceArray objectAtIndex:0] integerValue];
+    NSInteger topRowMiddleInt = [[choiceArray objectAtIndex:1] integerValue];
+    NSInteger topRowLastInt = [[choiceArray objectAtIndex:2] integerValue];
+    NSInteger middleRowFirstInt = [[choiceArray objectAtIndex:3] integerValue];
+    NSInteger bottomRowFirstInt = [[choiceArray objectAtIndex:6] integerValue];
     
     //TOP ROW HORIZONTAL CHECK
     
@@ -427,7 +438,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
             else
             {
-                [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];   
+                [resetButton setTitle:@"NEXT ROUND" forState:UIControlStateNormal];
             }
             
             resetButton.alpha = 0;
@@ -443,7 +454,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }
         else
         {
-         [self continueCurrentRound];   
+			[self continueCurrentRound];
         }
     }
     
@@ -501,7 +512,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 -(void)confirmChoice
 {
     if (tileChosen)
-    {        
+    {
         if(whoseTurn ==0)
         {
             [[tileArray objectAtIndex:currentTile] setBackgroundColor:UIColorFromRGB(0xffc604)];
@@ -586,21 +597,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [UIView animateWithDuration:0.5f
                               delay:0.0
-                        options: UIViewAnimationOptionCurveEaseIn
+							options: UIViewAnimationOptionCurveEaseIn
                          animations:^{
                              [[tileArray objectAtIndex:i] setAlpha:0.0f];
                              [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
                          }
                          completion:^(BOOL finished)
-                        {
-                            [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0xD20C2A)];
-                            [[tileArray objectAtIndex:i] setAlpha:1.0f];
-                            if (i == 8)
-                            {
-                                [self setupGame];
-                            }
-                        }
-        ];
+		 {
+			 [[tileArray objectAtIndex:i] setBackgroundColor:UIColorFromRGB(0xD20C2A)];
+			 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+			 if (i == 8)
+			 {
+				 [self setupGame];
+			 }
+		 }
+		 ];
     }
 }
 
@@ -618,54 +629,103 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [[tileArray objectAtIndex:i] resetView];
         
         [UIView animateWithDuration:0.75f
-                        
-                     animations:^{
-                         [[tileArray objectAtIndex:i] setAlpha:1.0f];
-                         
-                         switch (i)
-                         {
-                             case 0:
-                                 
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 140)];
-                                 break;
-                                 
-                             case 1:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 140)];
-                                 break;
-                                 
-                             case 2:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 140)];
-                                 break;
-                                 
-                             case 3:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 240)];
-                                 break;
-                                 
-                             case 4:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
-                                 break;
-                                 
-                             case 5:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 240)];
-                                 break;
-                                 
-                             case 6:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 340)];
-                                 break;
-                                 
-                             case 7:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 340)];
-                                 break;
-                                 
-                             case 8:
-                                 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 340)];
-                                 break;
-                                 
-                             default:
-                                 
-                                 break;
-                         }
-                     }];
+		 
+						 animations:^{
+							 [[tileArray objectAtIndex:i] setAlpha:1.0f];
+							 
+							 if (IS_IPHONE5) {
+								 switch (i)
+								 {
+									 case 0:
+										 
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 180)];
+										 break;
+										 
+									 case 1:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 180)];
+										 break;
+										 
+									 case 2:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 180)];
+										 break;
+										 
+									 case 3:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 280)];
+										 break;
+										 
+									 case 4:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 280)];
+										 break;
+										 
+									 case 5:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 280)];
+										 break;
+										 
+									 case 6:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 380)];
+										 break;
+										 
+									 case 7:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 380)];
+										 break;
+										 
+									 case 8:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 380)];
+										 break;
+										 
+									 default:
+										 
+										 break;
+								 }
+								 
+							 } else {
+								 switch (i)
+								 {
+									 case 0:
+										 
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 140)];
+										 break;
+										 
+									 case 1:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 140)];
+										 break;
+										 
+									 case 2:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 140)];
+										 break;
+										 
+									 case 3:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 240)];
+										 break;
+										 
+									 case 4:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 240)];
+										 break;
+										 
+									 case 5:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 240)];
+										 break;
+										 
+									 case 6:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(60, 340)];
+										 break;
+										 
+									 case 7:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(160, 340)];
+										 break;
+										 
+									 case 8:
+										 [[tileArray objectAtIndex:i] setCenter:CGPointMake(260, 340)];
+										 break;
+										 
+									 default:
+										 
+										 break;
+								 }
+							 }
+							 
+							 
+						 }];
     }
 }
 - (void)didSelectTile:(int)tile
